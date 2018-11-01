@@ -32,7 +32,7 @@
             DevExpress.XtraScheduler.TimeRuler timeRuler1 = new DevExpress.XtraScheduler.TimeRuler();
             DevExpress.XtraScheduler.TimeRuler timeRuler2 = new DevExpress.XtraScheduler.TimeRuler();
             this.schedulerControl = new DevExpress.XtraScheduler.SchedulerControl();
-            this.schedulerStorage = new DevExpress.XtraScheduler.SchedulerStorage(this.components);
+            this.schedulerStorage = new DevExpress.XtraScheduler.SchedulerDataStorage(this.components);
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.grdTasks = new DevExpress.XtraGrid.GridControl();
             this.gridViewTasks = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -62,7 +62,7 @@
             this.schedulerControl.Name = "schedulerControl";
             this.schedulerControl.Size = new System.Drawing.Size(1100, 467);
             this.schedulerControl.Start = new System.DateTime(2014, 11, 27, 0, 0, 0, 0);
-            this.schedulerControl.Storage = this.schedulerStorage;
+            this.schedulerControl.DataStorage = this.schedulerStorage;
             this.schedulerControl.TabIndex = 0;
             this.schedulerControl.Text = "schedulerControl1";
             this.schedulerControl.Views.DayView.TimeRulers.Add(timeRuler1);
@@ -217,7 +217,7 @@
         #endregion
 
         private DevExpress.XtraScheduler.SchedulerControl schedulerControl;
-        private DevExpress.XtraScheduler.SchedulerStorage schedulerStorage;
+        private DevExpress.XtraScheduler.SchedulerDataStorage schedulerStorage;
         private DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
         private DevExpress.XtraGrid.GridControl grdTasks;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewTasks;
