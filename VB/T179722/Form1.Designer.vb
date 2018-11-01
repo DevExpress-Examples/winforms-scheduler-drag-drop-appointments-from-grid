@@ -27,7 +27,7 @@
             Dim timeRuler1 As New DevExpress.XtraScheduler.TimeRuler()
             Dim timeRuler2 As New DevExpress.XtraScheduler.TimeRuler()
             Me.schedulerControl = New DevExpress.XtraScheduler.SchedulerControl()
-            Me.schedulerStorage = New DevExpress.XtraScheduler.SchedulerStorage(Me.components)
+            Me.schedulerStorage = New DevExpress.XtraScheduler.SchedulerDataStorage(Me.components)
             Me.splitContainerControl1 = New DevExpress.XtraEditors.SplitContainerControl()
             Me.grdTasks = New DevExpress.XtraGrid.GridControl()
             Me.gridViewTasks = New DevExpress.XtraGrid.Views.Grid.GridView()
@@ -57,7 +57,7 @@
             Me.schedulerControl.Name = "schedulerControl"
             Me.schedulerControl.Size = New System.Drawing.Size(1100, 467)
             Me.schedulerControl.Start = New Date(2014, 11, 27, 0, 0, 0, 0)
-            Me.schedulerControl.Storage = Me.schedulerStorage
+            Me.schedulerControl.DataStorage = Me.schedulerStorage
             Me.schedulerControl.TabIndex = 0
             Me.schedulerControl.Text = "schedulerControl1"
             Me.schedulerControl.Views.DayView.TimeRulers.Add(timeRuler1)
@@ -198,7 +198,7 @@
         #End Region
 
         Private WithEvents schedulerControl As DevExpress.XtraScheduler.SchedulerControl
-        Private schedulerStorage As DevExpress.XtraScheduler.SchedulerStorage
+        Private schedulerStorage As DevExpress.XtraScheduler.SchedulerDataStorage
         Private splitContainerControl1 As DevExpress.XtraEditors.SplitContainerControl
         Private grdTasks As DevExpress.XtraGrid.GridControl
         Private WithEvents gridViewTasks As DevExpress.XtraGrid.Views.Grid.GridView
