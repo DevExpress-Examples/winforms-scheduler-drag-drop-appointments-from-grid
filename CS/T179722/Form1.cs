@@ -13,91 +13,52 @@ using DevExpress.UserSkins;
 using DevExpress.XtraScheduler;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using System.Collections;
 
+namespace T179722 {
+    public partial class Form1 : XtraForm {
 
-namespace T179722
-{
-    public partial class Form1 : XtraForm
-    {       
-        public Form1()
-        {
+        public Form1() {
             InitializeComponent();
-            schedulerControl.Start = System.DateTime.Now;
+            this.schedulerControl.Start = DateTime.Now;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            schedulerControl.GroupType = SchedulerGroupType.Resource;
-            schedulerStorage.Appointments.ResourceSharing = true;
+        GridHitInfo DownHitInfo { get; set; }
 
-            DataHelper.FillResources(schedulerStorage, 5);
-            grdTasks.DataSource = DataHelper.GenerateScheduleTasks();
-        }       
-        
-        #region #GetGridHitInfo
-        GridHitInfo downHitInfo;
+        void OnForm1Load(object sender, EventArgs e) {
+            this.schedulerControl.GroupType = SchedulerGroupType.Resource;
+            this.schedulerStorage.Appointments.ResourceSharing = true;
 
-        private void gridViewTasks_MouseDown(object sender, MouseEventArgs e)
-        {
+            DataHelper.FillResources(this.schedulerStorage, 5);
+            this.grdTasks.DataSource = DataHelper.GenerateScheduleTasks();
+        }
+
+        void OnGridViewTasksMouseDown(object sender, MouseEventArgs e) {
             GridView view = sender as GridView;
-            downHitInfo = null;
+            this.DownHitInfo = null;
 
             GridHitInfo hitInfo = view.CalcHitInfo(new Point(e.X, e.Y));
             if (Control.ModifierKeys != Keys.None)
                 return;
             if (e.Button == MouseButtons.Left && hitInfo.InRow && hitInfo.HitTest != GridHitTest.RowIndicator)
-                downHitInfo = hitInfo;
+                this.DownHitInfo = hitInfo;
         }
-        #endregion #GetGridHitInfo
 
-        #region #GridViewMouseMove
-        private void gridViewTasks_MouseMove(object sender, MouseEventArgs e)
-        {
+        void OnGridViewTasksMouseMove(object sender, MouseEventArgs e) {
             GridView view = sender as GridView;
-            if (e.Button == MouseButtons.Left && downHitInfo != null)
-            {
+            if (e.Button == MouseButtons.Left && this.DownHitInfo != null) {
                 Size dragSize = SystemInformation.DragSize;
-                Rectangle dragRect = new Rectangle(new Point(downHitInfo.HitPoint.X - dragSize.Width / 2,
-                    downHitInfo.HitPoint.Y - dragSize.Height / 2), dragSize);
+                Rectangle dragRect = new Rectangle(new Point(this.DownHitInfo.HitPoint.X - dragSize.Width / 2,
+                    this.DownHitInfo.HitPoint.Y - dragSize.Height / 2), dragSize);
 
-                if (!dragRect.Contains(new Point(e.X, e.Y)))
-                {
+                if (!dragRect.Contains(new Point(e.X, e.Y))) {
                     view.GridControl.DoDragDrop(GetDragData(view), DragDropEffects.All);
-                    downHitInfo = null;
+                    this.DownHitInfo = null;
                 }
             }
         }
-        #endregion #GridViewMouseMove
 
-        #region #GetDragData
-        SchedulerDragData GetDragData(GridView view)
-        {
-            int[] selection = view.GetSelectedRows();
-            if (selection == null)
-                return null;
-
-            AppointmentBaseCollection appointments = new AppointmentBaseCollection();
-            int count = selection.Length;
-            for (int i = 0; i < count; i++)
-            {
-                int rowIndex = selection[i];
-                Appointment apt = schedulerStorage.CreateAppointment(AppointmentType.Normal);
-                apt.Subject = (string)view.GetRowCellValue(rowIndex, "Subject");
-                apt.LabelKey = (int)view.GetRowCellValue(rowIndex, "Severity");
-                apt.StatusKey = (int)view.GetRowCellValue(rowIndex, "Priority");
-                apt.Start = DateTime.Now;
-                apt.Duration = TimeSpan.FromHours((int)view.GetRowCellValue(rowIndex, "Duration"));
-                apt.Description = (string)view.GetRowCellValue(rowIndex, "Description");
-                appointments.Add(apt);
-            }
-
-            return new SchedulerDragData(appointments, 0);
-        }
-        #endregion #GetDragData
-
-        #region #SchedulerControlAppointmentDrop
-        private void schedulerControl_AppointmentDrop(object sender, AppointmentDragEventArgs e)
-        {
+        void OnSchedulerControlAppointmentDrop(object sender, AppointmentDragEventArgs e) {
             string createEventMsg = "Creating an event at {0} on {1}.";
             string moveEventMsg = "Moving the event from {0} on {1} to {2} on {3}.";
 
@@ -107,11 +68,70 @@ namespace T179722
             string msg = (srcStart == DateTime.MinValue) ? String.Format(createEventMsg, newStart.ToShortTimeString(), newStart.ToShortDateString()) :
                 String.Format(moveEventMsg, srcStart.ToShortTimeString(), srcStart.ToShortDateString(), newStart.ToShortTimeString(), newStart.ToShortDateString());
 
-            if (XtraMessageBox.Show(msg + "\r\nProceed?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-            {
+            if (XtraMessageBox.Show(msg + "\r\nProceed?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
                 e.Allow = false;
             }
         }
-        #endregion #SchedulerControlAppointmentDrop
+
+        void OnSchedulerControlAppointmentDrag(object sender, AppointmentDragEventArgs e) {
+            Appointment apt = e.EditedAppointment;
+            if (apt.Start == DateTime.MinValue)
+                apt.Start = e.HitInterval.Start;
+        }
+
+        void OnSchedulerControlAdditionalAppointmentsDrag(object sender, AdditionalAppointmentsDragEventArgs e) {
+            List<AppointmentExchangeData> exchangeList = new List<AppointmentExchangeData>();
+            foreach (AppointmentDragInfo aptInfo in e.PrimaryAppointmentInfos) {
+                var apt = aptInfo.EditedAppointment;
+                exchangeList.Add(new AppointmentExchangeData() {
+                    Subject = apt.Subject,
+                    Description = apt.Description,
+                    Start = DateTime.MinValue,
+                    Duration = apt.Duration,
+                    LabelKey = (int)apt.LabelKey,
+                    StatusKey = (int)apt.StatusKey
+                });
+            }
+            e.Data.SetData(DataFormats.Serializable, exchangeList);
+        }
+
+        void OnSchedulerControlPrepareDragData(object sender, PrepareDragDataEventArgs e) {
+            object data = e.DataObject.GetData(DataFormats.Serializable);
+            AppointmentBaseCollection appointments = new AppointmentBaseCollection();
+            foreach (AppointmentExchangeData item in (IList)data) {
+                var apt = this.schedulerStorage.CreateAppointment(AppointmentType.Normal);
+                apt.Subject = item.Subject;
+                apt.Description = item.Description;
+                apt.Start = item.Start;
+                apt.Duration = item.Duration;
+                apt.LabelKey = item.LabelKey;
+                apt.StatusKey = item.StatusKey;
+                appointments.Add(apt);
+            }
+            SchedulerDragData schedulerDragData = new SchedulerDragData(appointments);
+            e.DragData = schedulerDragData;
+        }
+
+        IDataObject GetDragData(GridView view) {
+            int[] selection = view.GetSelectedRows();
+            if (selection == null)
+                return null;
+
+            List<AppointmentExchangeData> exchangeList = new List<AppointmentExchangeData>();
+            int count = selection.Length;
+            for (int i = 0; i < count; i++) {
+                int rowIndex = selection[i];
+                exchangeList.Add(new AppointmentExchangeData() {
+                    Subject = (string)view.GetRowCellValue(rowIndex, "Subject"),
+                    LabelKey = (int)view.GetRowCellValue(rowIndex, "Severity"),
+                    StatusKey = (int)view.GetRowCellValue(rowIndex, "Priority"),
+                    Start = DateTime.MinValue,
+                    Duration = TimeSpan.FromHours((int)view.GetRowCellValue(rowIndex, "Duration")),
+                    Description = (string)view.GetRowCellValue(rowIndex, "Description"),
+                });
+            }
+
+            return new DataObject(DataFormats.Serializable, exchangeList);
+        }
     }
 }

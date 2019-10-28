@@ -57,30 +57,35 @@
             // 
             // schedulerControl
             // 
+            this.schedulerControl.DataStorage = this.schedulerStorage;
             this.schedulerControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.schedulerControl.Location = new System.Drawing.Point(0, 0);
+            this.schedulerControl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.schedulerControl.Name = "schedulerControl";
-            this.schedulerControl.Size = new System.Drawing.Size(1100, 467);
+            this.schedulerControl.Size = new System.Drawing.Size(2200, 898);
             this.schedulerControl.Start = new System.DateTime(2014, 11, 27, 0, 0, 0, 0);
-            this.schedulerControl.DataStorage = this.schedulerStorage;
             this.schedulerControl.TabIndex = 0;
             this.schedulerControl.Text = "schedulerControl1";
             this.schedulerControl.Views.DayView.TimeRulers.Add(timeRuler1);
             this.schedulerControl.Views.WorkWeekView.TimeRulers.Add(timeRuler2);
-            this.schedulerControl.AppointmentDrop += new DevExpress.XtraScheduler.AppointmentDragEventHandler(this.schedulerControl_AppointmentDrop);
+            this.schedulerControl.AppointmentDrag += new DevExpress.XtraScheduler.AppointmentDragEventHandler(this.OnSchedulerControlAppointmentDrag);
+            this.schedulerControl.AppointmentDrop += new DevExpress.XtraScheduler.AppointmentDragEventHandler(this.OnSchedulerControlAppointmentDrop);
+            this.schedulerControl.PrepareDragData += new DevExpress.XtraScheduler.PrepareDragDataEventHandler(this.OnSchedulerControlPrepareDragData);
+            this.schedulerControl.AdditionalAppointmentsDrag += new System.EventHandler<DevExpress.XtraScheduler.AdditionalAppointmentsDragEventArgs>(OnSchedulerControlAdditionalAppointmentsDrag);
             // 
             // splitContainerControl1
             // 
             this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerControl1.Horizontal = false;
             this.splitContainerControl1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerControl1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.splitContainerControl1.Name = "splitContainerControl1";
             this.splitContainerControl1.Panel1.Controls.Add(this.schedulerControl);
             this.splitContainerControl1.Panel1.Text = "Panel1";
             this.splitContainerControl1.Panel2.Controls.Add(this.grdTasks);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(1100, 700);
-            this.splitContainerControl1.SplitterPosition = 467;
+            this.splitContainerControl1.Size = new System.Drawing.Size(2200, 1346);
+            this.splitContainerControl1.SplitterPosition = 898;
             this.splitContainerControl1.TabIndex = 1;
             this.splitContainerControl1.Text = "splitContainerControl1";
             // 
@@ -88,14 +93,16 @@
             // 
             this.grdTasks.Cursor = System.Windows.Forms.Cursors.Default;
             this.grdTasks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdTasks.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.grdTasks.Location = new System.Drawing.Point(0, 0);
             this.grdTasks.MainView = this.gridViewTasks;
+            this.grdTasks.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.grdTasks.Name = "grdTasks";
             this.grdTasks.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repSpinDuration,
             this.repPriority,
             this.repSeverity});
-            this.grdTasks.Size = new System.Drawing.Size(1100, 228);
+            this.grdTasks.Size = new System.Drawing.Size(2200, 428);
             this.grdTasks.TabIndex = 0;
             this.grdTasks.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewTasks});
@@ -108,31 +115,35 @@
             this.colPriority,
             this.colSeverity,
             this.colDescription});
+            this.gridViewTasks.DetailHeight = 673;
+            this.gridViewTasks.FixedLineWidth = 4;
             this.gridViewTasks.GridControl = this.grdTasks;
             this.gridViewTasks.Name = "gridViewTasks";
             this.gridViewTasks.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseUp;
             this.gridViewTasks.OptionsView.ShowGroupPanel = false;
-            this.gridViewTasks.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gridViewTasks_MouseDown);
-            this.gridViewTasks.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gridViewTasks_MouseMove);
+            this.gridViewTasks.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnGridViewTasksMouseDown);
+            this.gridViewTasks.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnGridViewTasksMouseMove);
             // 
             // colSubject
             // 
             this.colSubject.Caption = "Subject";
             this.colSubject.FieldName = "Subject";
+            this.colSubject.MinWidth = 40;
             this.colSubject.Name = "colSubject";
             this.colSubject.Visible = true;
             this.colSubject.VisibleIndex = 0;
-            this.colSubject.Width = 160;
+            this.colSubject.Width = 320;
             // 
             // colDuration
             // 
             this.colDuration.Caption = "Duration(h)";
             this.colDuration.ColumnEdit = this.repSpinDuration;
             this.colDuration.FieldName = "Duration";
+            this.colDuration.MinWidth = 40;
             this.colDuration.Name = "colDuration";
             this.colDuration.Visible = true;
             this.colDuration.VisibleIndex = 1;
-            this.colDuration.Width = 229;
+            this.colDuration.Width = 458;
             // 
             // repSpinDuration
             // 
@@ -146,10 +157,11 @@
             this.colPriority.Caption = "Priority";
             this.colPriority.ColumnEdit = this.repPriority;
             this.colPriority.FieldName = "Priority";
+            this.colPriority.MinWidth = 40;
             this.colPriority.Name = "colPriority";
             this.colPriority.Visible = true;
             this.colPriority.VisibleIndex = 2;
-            this.colPriority.Width = 229;
+            this.colPriority.Width = 458;
             // 
             // repPriority
             // 
@@ -167,10 +179,11 @@
             this.colSeverity.Caption = "Severity";
             this.colSeverity.ColumnEdit = this.repSeverity;
             this.colSeverity.FieldName = "Severity";
+            this.colSeverity.MinWidth = 40;
             this.colSeverity.Name = "colSeverity";
             this.colSeverity.Visible = true;
             this.colSeverity.VisibleIndex = 3;
-            this.colSeverity.Width = 229;
+            this.colSeverity.Width = 458;
             // 
             // repSeverity
             // 
@@ -187,20 +200,22 @@
             // 
             this.colDescription.Caption = "Description";
             this.colDescription.FieldName = "Description";
+            this.colDescription.MinWidth = 40;
             this.colDescription.Name = "colDescription";
             this.colDescription.Visible = true;
             this.colDescription.VisibleIndex = 4;
-            this.colDescription.Width = 235;
+            this.colDescription.Width = 470;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1100, 700);
+            this.ClientSize = new System.Drawing.Size(2200, 1346);
             this.Controls.Add(this.splitContainerControl1);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.OnForm1Load);
             ((System.ComponentModel.ISupportInitialize)(this.schedulerControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.schedulerStorage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
