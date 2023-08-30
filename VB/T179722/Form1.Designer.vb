@@ -1,5 +1,7 @@
-﻿Namespace T179722
-    Partial Public Class Form1
+Namespace T179722
+
+    Partial Class Form1
+
         ''' <summary>
         ''' Required designer variable.
         ''' </summary>
@@ -10,22 +12,22 @@
         ''' </summary>
         ''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            If disposing AndAlso (components IsNot Nothing) Then
-                components.Dispose()
+            If disposing AndAlso (Me.components IsNot Nothing) Then
+                Me.components.Dispose()
             End If
+
             MyBase.Dispose(disposing)
         End Sub
 
-        #Region "Windows Form Designer generated code"
-
+#Region "Windows Form Designer generated code"
         ''' <summary>
         ''' Required method for Designer support - do not modify
         ''' the contents of this method with the code editor.
         ''' </summary>
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim timeRuler1 As New DevExpress.XtraScheduler.TimeRuler()
-            Dim timeRuler2 As New DevExpress.XtraScheduler.TimeRuler()
+            Dim timeRuler1 As DevExpress.XtraScheduler.TimeRuler = New DevExpress.XtraScheduler.TimeRuler()
+            Dim timeRuler2 As DevExpress.XtraScheduler.TimeRuler = New DevExpress.XtraScheduler.TimeRuler()
             Me.schedulerControl = New DevExpress.XtraScheduler.SchedulerControl()
             Me.schedulerStorage = New DevExpress.XtraScheduler.SchedulerDataStorage(Me.components)
             Me.splitContainerControl1 = New DevExpress.XtraEditors.SplitContainerControl()
@@ -39,15 +41,15 @@
             Me.colSeverity = New DevExpress.XtraGrid.Columns.GridColumn()
             Me.repSeverity = New DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox()
             Me.colDescription = New DevExpress.XtraGrid.Columns.GridColumn()
-            CType(Me.schedulerControl, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.schedulerStorage, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.splitContainerControl1, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.schedulerControl), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.schedulerStorage), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.splitContainerControl1), System.ComponentModel.ISupportInitialize).BeginInit()
             Me.splitContainerControl1.SuspendLayout()
-            CType(Me.grdTasks, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.gridViewTasks, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.repSpinDuration, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.repPriority, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.repSeverity, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.grdTasks), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.gridViewTasks), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.repSpinDuration), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.repPriority), System.ComponentModel.ISupportInitialize).BeginInit()
+            CType((Me.repSeverity), System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             ' 
             ' schedulerControl
@@ -56,12 +58,13 @@
             Me.schedulerControl.Location = New System.Drawing.Point(0, 0)
             Me.schedulerControl.Name = "schedulerControl"
             Me.schedulerControl.Size = New System.Drawing.Size(1100, 467)
-            Me.schedulerControl.Start = New Date(2014, 11, 27, 0, 0, 0, 0)
+            Me.schedulerControl.Start = New System.DateTime(2014, 11, 27, 0, 0, 0, 0)
             Me.schedulerControl.DataStorage = Me.schedulerStorage
             Me.schedulerControl.TabIndex = 0
             Me.schedulerControl.Text = "schedulerControl1"
             Me.schedulerControl.Views.DayView.TimeRulers.Add(timeRuler1)
             Me.schedulerControl.Views.WorkWeekView.TimeRulers.Add(timeRuler2)
+            AddHandler Me.schedulerControl.AppointmentDrop, New DevExpress.XtraScheduler.AppointmentDragEventHandler(AddressOf Me.schedulerControl_AppointmentDrop)
             ' 
             ' splitContainerControl1
             ' 
@@ -80,23 +83,25 @@
             ' 
             ' grdTasks
             ' 
-            Me.grdTasks.Cursor = System.Windows.Forms.Cursors.Default
+            Me.grdTasks.Cursor = System.Windows.Forms.Cursors.[Default]
             Me.grdTasks.Dock = System.Windows.Forms.DockStyle.Fill
             Me.grdTasks.Location = New System.Drawing.Point(0, 0)
             Me.grdTasks.MainView = Me.gridViewTasks
             Me.grdTasks.Name = "grdTasks"
-            Me.grdTasks.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() { Me.repSpinDuration, Me.repPriority, Me.repSeverity})
+            Me.grdTasks.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.repSpinDuration, Me.repPriority, Me.repSeverity})
             Me.grdTasks.Size = New System.Drawing.Size(1100, 228)
             Me.grdTasks.TabIndex = 0
-            Me.grdTasks.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() { Me.gridViewTasks})
+            Me.grdTasks.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.gridViewTasks})
             ' 
             ' gridViewTasks
             ' 
-            Me.gridViewTasks.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() { Me.colSubject, Me.colDuration, Me.colPriority, Me.colSeverity, Me.colDescription})
+            Me.gridViewTasks.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colSubject, Me.colDuration, Me.colPriority, Me.colSeverity, Me.colDescription})
             Me.gridViewTasks.GridControl = Me.grdTasks
             Me.gridViewTasks.Name = "gridViewTasks"
             Me.gridViewTasks.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseUp
             Me.gridViewTasks.OptionsView.ShowGroupPanel = False
+            AddHandler Me.gridViewTasks.MouseDown, New System.Windows.Forms.MouseEventHandler(AddressOf Me.gridViewTasks_MouseDown)
+            AddHandler Me.gridViewTasks.MouseMove, New System.Windows.Forms.MouseEventHandler(AddressOf Me.gridViewTasks_MouseMove)
             ' 
             ' colSubject
             ' 
@@ -120,7 +125,7 @@
             ' repSpinDuration
             ' 
             Me.repSpinDuration.AutoHeight = False
-            Me.repSpinDuration.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            Me.repSpinDuration.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
             Me.repSpinDuration.Name = "repSpinDuration"
             ' 
             ' colPriority
@@ -136,12 +141,8 @@
             ' repPriority
             ' 
             Me.repPriority.AutoHeight = False
-            Me.repPriority.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-            Me.repPriority.Items.AddRange(New DevExpress.XtraEditors.Controls.ImageComboBoxItem() { _
-                New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Low", 0, -1), _
-                New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Normal", 1, -1), _
-                New DevExpress.XtraEditors.Controls.ImageComboBoxItem("High", 2, -1) _
-            })
+            Me.repPriority.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            Me.repPriority.Items.AddRange(New DevExpress.XtraEditors.Controls.ImageComboBoxItem() {New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Low", 0, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Normal", 1, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("High", 2, -1)})
             Me.repPriority.Name = "repPriority"
             ' 
             ' colSeverity
@@ -157,12 +158,8 @@
             ' repSeverity
             ' 
             Me.repSeverity.AutoHeight = False
-            Me.repSeverity.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() { New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-            Me.repSeverity.Items.AddRange(New DevExpress.XtraEditors.Controls.ImageComboBoxItem() { _
-                New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Minor", 0, -1), _
-                New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Moderate", 1, -1), _
-                New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Severe", 2, -1) _
-            })
+            Me.repSeverity.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            Me.repSeverity.Items.AddRange(New DevExpress.XtraEditors.Controls.ImageComboBoxItem() {New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Minor", 0, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Moderate", 1, -1), New DevExpress.XtraEditors.Controls.ImageComboBoxItem("Severe", 2, -1)})
             Me.repSeverity.Name = "repSeverity"
             ' 
             ' colDescription
@@ -182,34 +179,44 @@
             Me.Controls.Add(Me.splitContainerControl1)
             Me.Name = "Form1"
             Me.Text = "Form1"
-            CType(Me.schedulerControl, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.schedulerStorage, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.splitContainerControl1, System.ComponentModel.ISupportInitialize).EndInit()
+            AddHandler Me.Load, New System.EventHandler(AddressOf Me.Form1_Load)
+            CType((Me.schedulerControl), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.schedulerStorage), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.splitContainerControl1), System.ComponentModel.ISupportInitialize).EndInit()
             Me.splitContainerControl1.ResumeLayout(False)
-            CType(Me.grdTasks, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.gridViewTasks, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.repSpinDuration, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.repPriority, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.repSeverity, System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.grdTasks), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.gridViewTasks), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.repSpinDuration), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.repPriority), System.ComponentModel.ISupportInitialize).EndInit()
+            CType((Me.repSeverity), System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
-
         End Sub
 
-        #End Region
+#End Region
+        Private schedulerControl As DevExpress.XtraScheduler.SchedulerControl
 
-        Private WithEvents schedulerControl As DevExpress.XtraScheduler.SchedulerControl
         Private schedulerStorage As DevExpress.XtraScheduler.SchedulerDataStorage
-        Private splitContainerControl1 As DevExpress.XtraEditors.SplitContainerControl
-        Private grdTasks As DevExpress.XtraGrid.GridControl
-        Private WithEvents gridViewTasks As DevExpress.XtraGrid.Views.Grid.GridView
-        Private colSubject As DevExpress.XtraGrid.Columns.GridColumn
-        Private colDuration As DevExpress.XtraGrid.Columns.GridColumn
-        Private repSpinDuration As DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit
-        Private colPriority As DevExpress.XtraGrid.Columns.GridColumn
-        Private repPriority As DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox
-        Private colSeverity As DevExpress.XtraGrid.Columns.GridColumn
-        Private repSeverity As DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox
-        Private colDescription As DevExpress.XtraGrid.Columns.GridColumn
 
+        Private splitContainerControl1 As DevExpress.XtraEditors.SplitContainerControl
+
+        Private grdTasks As DevExpress.XtraGrid.GridControl
+
+        Private gridViewTasks As DevExpress.XtraGrid.Views.Grid.GridView
+
+        Private colSubject As DevExpress.XtraGrid.Columns.GridColumn
+
+        Private colDuration As DevExpress.XtraGrid.Columns.GridColumn
+
+        Private repSpinDuration As DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit
+
+        Private colPriority As DevExpress.XtraGrid.Columns.GridColumn
+
+        Private repPriority As DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox
+
+        Private colSeverity As DevExpress.XtraGrid.Columns.GridColumn
+
+        Private repSeverity As DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox
+
+        Private colDescription As DevExpress.XtraGrid.Columns.GridColumn
     End Class
 End Namespace
