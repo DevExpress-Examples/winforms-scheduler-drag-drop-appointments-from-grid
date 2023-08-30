@@ -1,23 +1,22 @@
-﻿Imports System
-Imports System.Collections.Generic
+Imports System
 Imports System.Windows.Forms
 Imports DevExpress.LookAndFeel
 
 Namespace T179722
-	Friend Module Program
-		''' <summary>
-		''' The main entry point for the application.
-		''' </summary>
-		<STAThread>
-		Sub Main()
-			Application.EnableVisualStyles()
-			Application.SetCompatibleTextRenderingDefault(False)
 
-			DevExpress.Skins.SkinManager.EnableFormSkins()
-			DevExpress.UserSkins.BonusSkins.Register()
-			UserLookAndFeel.Default.SetSkinStyle("DevExpress Style")
+    Friend Module Program
 
-			Application.Run(New Form1())
-		End Sub
-	End Module
+        ''' <summary>
+        ''' The main entry point for the application.
+        ''' </summary>
+        <STAThread>
+        Sub Main()
+            Call Application.EnableVisualStyles()
+            Application.SetCompatibleTextRenderingDefault(False)
+            DevExpress.Skins.SkinManager.EnableFormSkins()
+            DevExpress.UserSkins.BonusSkins.Register()
+            UserLookAndFeel.Default.SetSkinStyle("DevExpress Style")
+            Call Application.Run(New Form1())
+        End Sub
+    End Module
 End Namespace
