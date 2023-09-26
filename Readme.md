@@ -5,7 +5,7 @@
 <!-- default badges end -->
 # Drag and Drop Appointments from the Grid Control to Scheduler using SchedulerDragData
 
-This example demonstrates how to drag appointments from the `GridView` and drop them to the `SchedulerControl` using [SchedulerDragData](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraScheduler.SchedulerDragData).
+This example demonstrates how to drag appointments from the `GridView` and drop them onto the `SchedulerControl` using [SchedulerDragData](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraScheduler.SchedulerDragData).
 
 
 ## See Also
